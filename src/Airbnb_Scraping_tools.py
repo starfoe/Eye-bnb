@@ -6,7 +6,7 @@ import argparse
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve 
-import pymongo
+
 import pandas as pd
 import numpy as np
 import random
@@ -144,7 +144,8 @@ def parse_each_webpage(page_url):
         return [], page_data
             
     return info_collected, page_data
-       
+
+
     
     
     
