@@ -5,7 +5,7 @@
 ## Business Prospect
 
 •	This project will help users find their favorite lodging during their travel, based on images or some descriptions uploaded by the users
-s
+
 •	It will provide value to:
 
   o	People who are looking for adding more fun, passion and excitement to their travel 
