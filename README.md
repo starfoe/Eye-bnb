@@ -1,7 +1,7 @@
 
-Eye BnB
+# Eye BnB
 
-Business Understanding
+## Business Understanding
 
 •	This project will help users find their favorite lodging during their travel, based on images or some descriptions that the users upload
 
@@ -9,12 +9,12 @@ Business Understanding
   o	People who are looking for adding more fun, passion and excitement to their travel 
   o	Apartment owners who want to know how many apartments in the same city looks like theirs so that they can make their apartments   either discriminative or closer to the apartments which are already popular. 
 
-Data Understanding
+## Data Understanding
 
 •	Airbnb publicized their own datasets from which I can get a list of all the apartments in certain cities in the U.S. and collect basic information of the apartments
 •	With the list above, I can scrape images and highlight tags of each apartment with BeautifulSoup and Request
 
-Data Preparation
+## Data Preparation
 
 •	Online collection
   o	Raw data is the basic information of Airbnb apartment (location, descriptions, price range, webpage URL) which can be found in the datasets publicated by Airbnb. It will be saved in MongoDB on AWS
@@ -27,30 +27,33 @@ Data Preparation
   o	For each apartment in the DB, extract certain features from its images and save to an excel spreadsheet (with its ID) 
   o	Put highlight reviews to the excel spreadsheet for further uses
   
-Modeling
+## Modeling
 
 •	Similarities calculation
   o	Eculidean Distance
   o	Cosine Distance
   
 •	Image feature extraction
-  o	Color：RGB
-  o	Fourier transform based features
+  o	Histgram
+  o	GIST
+  o CNN
   o	others
 
-Evaluation
+## Evaluation
+• Model Validation：Image features and similarity measurements will be tested on a subset of Indoor Scene Recognition dataset publicated by MIT, for more details: http://web.mit.edu/torralba/www/indoor.html
 
 •	Visualization: look at all the recommendations and conceptually check if they make sense
 
-Deployment
+## Deployment
 
 •	Step1: given a picture, the system can return places looks similar (of the same style)
 •	Step2: users can add some word descriptions to what they dream of going ( industrial style, splendid..) to make the searching more precise
 
+## Techiques 
+•	MongoDB
+•	AWS EC2 and S3
+• Tensorflow
 
-favorite
-61
-I've been using Markdown for class notes, and it's great. I even do some preprocessing on the Markdown so I can do things like tables. But this term I'm teaching a class with a lot of math, and I'd love to be able to put LaTeX formulas with Markdown, something like this:
-The refinement relation is written $a \sqsubseteq b$, which can be 
-pronounced "$a$ approximates $b$" or "$b$ is at least as defined as $a$".
+
+
 
