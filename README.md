@@ -1,4 +1,5 @@
 
+
 # Eye BnB
 
 ## Business Understanding
@@ -31,16 +32,22 @@
 
 •	Similarities calculation
   o	Eculidean Distance
+  
   o	Cosine Distance
   
 •	Image feature extraction
   o	Histgram
+  
   o	GIST
+  
   o CNN
+  
   o	others
 
 ## Evaluation
 • Model Validation：Image features and similarity measurements will be tested on a subset of Indoor Scene Recognition dataset publicated by MIT, for more details: http://web.mit.edu/torralba/www/indoor.html
+
+• After being tested on the dataset above, the feature and similarity measurement will be employed in the recommendation process
 
 •	Visualization: look at all the recommendations and conceptually check if they make sense
 
