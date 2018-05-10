@@ -97,3 +97,33 @@ def show_similar_images(X,threshold,imgList,limit = 30,reverse = False):
         img = Image.open(imgList[index_small[i,1]])   
         pl.axis('off')
         pl.imshow(img)
+
+        
+def s3_list_files(bucket_name,prefix,layers):
+    '''
+        Function: find all the file names in a S3 bucket
+        Input:
+            bucket_name: <string> name of the bucket
+            prefix:<string>  the specific file path in the bucket
+            layers
+        Output:<pd.df> a dataframe includes filenames and folders in the bucket
+    '''
+    s3_resource = boto3.resource('s3')
+    bucket = s3_resource.Bucket(name=bucket_name)
+    dict_parse = {}
+    i = True
+    for obj in bucket.objects.filter(Prefix=prefix):
+        string = obj.key.split('/')
+        if i:
+            dict_parse['full_name'] = []
+            dict_parse['full_name'].append(obj.key)            
+            for x in range(1,layers):                
+                dict_parse[x] = []
+                dict_parse[x].append(string[-1*x])
+            i = False
+            
+        for x in range(1,layers):            
+            dict_parse['full_name'].append(obj.key)
+            dict_parse[x].append(string[-1*x])    
+
+    return pd.DataFrame(dict_parse)
