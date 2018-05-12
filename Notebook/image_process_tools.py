@@ -84,11 +84,15 @@ def gist_extraction(imgFolder,nums = 9,startImg = 0,local = False, **kwargs):
             print("image {} is in processing".format(i))
             image_name = imgFolder + image_list[i]
             print(image_name)
-            response = req.get(image_name)
-            im = np.array(Image.open(BytesIO(response.content)))
-            feature_for_i = gist.extract(im)
-            featureX = np.concatenate((featureX,feature_for_i.reshape(1,-1)),axis = 0)
-            nameList.append(image_name)           
+            try:
+                response = req.get(image_name)
+                im = np.array(Image.open(BytesIO(response.content)))
+                feature_for_i = gist.extract(im)
+                featureX = np.concatenate((featureX,feature_for_i.reshape(1,-1)),axis = 0)
+                nameList.append(image_name)
+            except:
+                print('{} is error'.format(image_name))
+                continue
     
     return featureX[1:,:], nameList       
 
