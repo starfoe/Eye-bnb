@@ -175,9 +175,11 @@ def s3_list_files(bucket_name,prefix,layers):
             
         for x in range(1,layers):            
             dict_parse['full_name'].append(obj.key)
-            dict_parse[x].append(string[-1*x])    
-
-    return pd.DataFrame(dict_parse)
+            dict_parse[x].append(string[-1*x])  
+            
+    pd_return = pd.DataFrame(dict_parse)
+    pd_return_1 = pd_return.drop(pd_return[pd_return[1]==''].index,axis=0)
+    return pd_return_1
 
 def feature_df_assembly(X,imgNameList,write_to_file = False, **kwargs):
     '''
