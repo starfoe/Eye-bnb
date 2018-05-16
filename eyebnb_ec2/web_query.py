@@ -4,7 +4,7 @@ import requests
 import pymongo
 import requests as req
 import pandas as pd
-import numpy as pd
+import numpy as np
 import gist
 
 from PIL import Image
@@ -12,23 +12,12 @@ from io import BytesIO
 from sklearn.metrics.pairwise import cosine_similarity
 
 def load_features(path):
-    feature_matrix = np.loadtxt(path)
-    apt_name = n
+    df_file = pd.read_pickle(path)
+    apt_name = df_file['apt_id_1']
+    img_file_path = df_file['full_file_name']
+    feature_matrix = df_file[list(range(960))].values
+    return feature_matrix,img_file_path,apt_name
     
-#     features_cf = pd.read_excel(path)
-#     features = features_cf['features'].values
-#     cleaned_feature = []
-#     for i,x in enumerate(features):
-#         tmp_cleaned = clean_feature_data(x)
-#         if not tmp_cleaned:
-#             break
-#         else:
-#             assert(len(tmp_cleaned)==960)
-#             cleaned_feature.append(np.array(tmp_cleaned))
-#     assert(len(cleaned_feature) == len(features_cf))
-#     features_cf.drop('features',axis = 1)   
-#     features_cf['features'] = cleaned_feature
-#     return features_cf
 
 def find_closest_img(featureX,features_matrix,mask = {}, n_selected = 20):
     '''
@@ -78,7 +67,7 @@ def find_closest_img(featureX,features_matrix,mask = {}, n_selected = 20):
 
 
 def web_query(url_input,return_top = 20,feature_path):
-    feature_matrix,apt_id,filepath = load_features(feature_path)
+    feature_matrix,img_file_path,apt_name = load_features(feature_path)
     try:
         response = req.get(url_input)
         im = np.array(Image.open(BytesIO(response.content)))
@@ -87,10 +76,12 @@ def web_query(url_input,return_top = 20,feature_path):
         break
         #raise error
     selected_index =  find_closest_img(feature_input,feature_matrix,return_top)[0]
-    
     selected_apt_id = apt_id[selected_index]
     selected_image_path = filepath[selected_index]
-    
+    ######
+    #if there are duplicated aparts in the recommending results, then keep only one of them    
+    ######
+    return selected_apt_id,selected_image_path
     
     
     
