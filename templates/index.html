@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Eye bnb</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="../static/css/table.css">
+    
+  </head>
+ 
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    
+    
+      <navbar_1>Eye bnb</navbar_1>
+        
+ <!--      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+
+<!--       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+ -->    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h4>Discover Airbnb lodges and apartments for your dreaming journey</h4>
+        
+        <p>to be add something here </p>
+      </div>
+    </div>
+
+
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class ="row mt-5"></div>
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Have seen one somewhere online?</h4>
+        <p>Please paste your image url here!</p>          
+        <input id="single_event" />
+        <button type="button" id="retrieve_id">Go!</button>
+        <p><span id="single_result"></span></p>
+        </div>
+        <!--div class="col-md-4 text-center">
+          <h2>Or</h2>
+       </div-->
+        <div class="col-md-4">
+          <h3>Highest Exposure</h3>
+        <p>Retrieve <i>N</i> number of events with the highest fraud exposure.</p>          
+        <input id="highest_exposure" />
+        <button type="button" id="retrieve_highest">Go!</button>
+        <p><span id="many_results"></span></p>
+        </div>
+      </div>
+      <hr>
+      </div>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <table class="blueTable">
+              <tbody>
+                <tr><th>Apartment ID</th><th>Apartment Page</th><th>Name</th><th>Highlights</th><th>Overal Rating</th><th>Host name</th><th>Host Name</th><th>Host About</th></tr>
+              </tbody>
+            </table>
+            <div class="col-md-8 text-center"><p><span id="results"></span></p></div>
+            <div class="col-md-2"></div>
+        </div>
+      </div>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    get_single_inputs = function () {
+        let single = $("input#single_event").val()
+        return {'single_id': single}
+    };
+    get_highest_inputs = function () {
+        let highest_exp = $("input#highest_exposure").val()
+        return {'highest_exp': highest_exp}
+    };
+    let send_inputs_json = function (inputs) {
+        $.ajax({
+            url: '/predict',
+            contentType: "application/json; charset=utf-8",
+            type: 'POST',
+            success: function(data) {
+
+                display_results(data);
+            },
+            data: JSON.stringify(inputs)
+        });
+    };
+    let display_results = function(results) {
+        $('table.blueTable').empty();
+        $('table.blueTable').append("<tr><th>Case ID</th><th>Sequence #</th><th>Name</th><th>HTML</th><th>Ticket Quant.</th><th>Ticket Val</th><th>Fraud Probability</th><th>Fraud Exp.</th></tr>");
+        var inputs = JSON.parse(results.inputs);
+        for (var i = 0; i < inputs.length; i++) {
+          tr = $('<tr/>');
+          tr.append("<td>" + inputs[i].case_id + "</td>");
+          tr.append("<td>" + inputs[i].sequence_number + "</td>");
+          tr.append("<td>" + inputs[i].event_name + "</td>");
+          tr.append("<td>" + "<a href={{link}} " + "id=html" + i + ">HTML</a>" + "</td>");
+          tr.append("<td>" + inputs[i].ticket_quantity + "</td>");
+          tr.append("<td>" + inputs[i].ticket_value + "</td>");
+          tr.append("<td>" + inputs[i].fraud_probability + "</td>");
+          tr.append("<td>" + inputs[i].fraud_exposure + "</td>");
+          $("table.blueTable").append(tr);
+        };
+    };
+    $(document).ready(function(){
+        $("button#retrieve_id").click(function(){
+            let inputs = get_single_inputs();
+            send_inputs_json(inputs);
+        })
+        $("button#retrieve_highest").click(function(){
+            let inputs = get_highest_inputs();
+            send_inputs_json(inputs);
+        })
+    })
+
+</script>
+</body>
+
+
+      <footer>
+        <p>&copy; EyeBnb_Chen 2018</p>
+      </footer>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+
+    <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+ -->  </body>
+</html>
+
+
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fraud Detection Dashboard</title>
+</head>
+<body>
+</html> -->
