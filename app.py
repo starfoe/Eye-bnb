@@ -20,16 +20,17 @@ def prediction():
     data = request.json#get input passed by json file
     url_input = data.get('single_id')
 #     highest_exp = data.get('highest_exp')
-    feature_path = 'https://s3-us-west-2.amazonaws.com/chen-gal-test/features/Boston-Massachusetts-US/database_image.xlsx'
+    feature_path = 'features\Boston-Massachusetts-US\Boston_all.pickle'
     if url_input:
-        result_apt,result_img = web_query(url_input, feature_path)
+#         result_apt,result_img = web_query(url_input, feature_path)
+        result = web_query(url_input, feature_path)
 #     elif highest_exp:
 #         result = web_query(None, highest_exp)
 #     else:
 #         result = web_query()# if no query coming in ,then return hottest apartment
 
-#     return jsonify({'inputs': result})#save to jsonify and go back to the webpage
-    return jsonify({'apt_id':result_apt,'img_path':result_img})
+    return jsonify({'inputs': result})#save to jsonify and go back to the webpage
+#     return jsonify({'apt_id':result_apt,'img_path':result_img})
 
 
 def main():
