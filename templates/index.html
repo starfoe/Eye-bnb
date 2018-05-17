@@ -10,8 +10,50 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="../static/css/table.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/table.css">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+      
+<script type="text/javascript">
+    get_single_inputs = function () {
+        let single = $("input#single_event").val()
+        console.log(single);
+        return {'single_id': single}
+    };
+    get_highest_inputs = function () {
+        let highest_exp = $("input#highest_exposure").val()
+        return {'highest_exp': highest_exp}
+    };
+    let send_inputs_json = function (inputs) {
+        $.ajax({
+            url: '/predict',
+            contentType: "application/json; charset=utf-8",
+            type: 'POST',
+            success: function(data) {
+                display_results(data);
+            },
+            data: JSON.stringify(inputs)
+        });
+    };
+    let display_results = function(results) {
+        $('table#blueTable tbody').html(results)
+        };
     
+    $(document).ready(function(){
+        $("button#retrieve_id").click(function(){
+            let inputs = get_single_inputs();
+            send_inputs_json(inputs);
+        })
+        $("button#retrieve_highest").click(function(){
+            let inputs = get_highest_inputs();
+            send_inputs_json(inputs);
+        })
+    })
+
+</script> 
   </head>
  
 <body>
@@ -90,76 +132,23 @@
       <div class="container">
         <div class="row">
             <div class="col-md-2"></div>
-            <table class="blueTable">
-              <tbody>
-                <tr><th>Apartment ID</th><th>Apartment Page</th><th>Name</th><th>Highlights</th><th>Overal Rating</th><th>Host name</th><th>Host Name</th><th>Host About</th></tr>
+            <table class="blueTable" id="blueTable">
+              <tbody>                
               </tbody>
             </table>
             <div class="col-md-8 text-center"><p><span id="results"></span></p></div>
             <div class="col-md-2"></div>
         </div>
       </div>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-<script type="text/javascript">
-    get_single_inputs = function () {
-        let single = $("input#single_event").val()
-        return {'single_id': single}
-    };
-    get_highest_inputs = function () {
-        let highest_exp = $("input#highest_exposure").val()
-        return {'highest_exp': highest_exp}
-    };
-    let send_inputs_json = function (inputs) {
-        $.ajax({
-            url: '/predict',
-            contentType: "application/json; charset=utf-8",
-            type: 'POST',
-            success: function(data) {
-
-                display_results(data);
-            },
-            data: JSON.stringify(inputs)
-        });
-    };
-    let display_results = function(results) {
-        $('table.blueTable').empty();
-        $('table.blueTable').append("<tr><th>Case ID</th><th>Sequence #</th><th>Name</th><th>HTML</th><th>Ticket Quant.</th><th>Ticket Val</th><th>Fraud Probability</th><th>Fraud Exp.</th></tr>");
-        var inputs = JSON.parse(results.inputs);
-        for (var i = 0; i < inputs.length; i++) {
-          tr = $('<tr/>');
-          tr.append("<td>" + inputs[i].case_id + "</td>");
-          tr.append("<td>" + inputs[i].sequence_number + "</td>");
-          tr.append("<td>" + inputs[i].event_name + "</td>");
-          tr.append("<td>" + "<a href={{link}} " + "id=html" + i + ">HTML</a>" + "</td>");
-          tr.append("<td>" + inputs[i].ticket_quantity + "</td>");
-          tr.append("<td>" + inputs[i].ticket_value + "</td>");
-          tr.append("<td>" + inputs[i].fraud_probability + "</td>");
-          tr.append("<td>" + inputs[i].fraud_exposure + "</td>");
-          $("table.blueTable").append(tr);
-        };
-    };
-    $(document).ready(function(){
-        $("button#retrieve_id").click(function(){
-            let inputs = get_single_inputs();
-            send_inputs_json(inputs);
-        })
-        $("button#retrieve_highest").click(function(){
-            let inputs = get_highest_inputs();
-            send_inputs_json(inputs);
-        })
-    })
-
-</script>
-</body>
-
 
       <footer>
         <p>&copy; EyeBnb_Chen 2018</p>
       </footer>
+ 
+</body>
+
+    
+
 
 
     <!-- Bootstrap core JavaScript
@@ -168,15 +157,8 @@
 
 
     <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
- -->  </body>
+ --> 
 </html>
 
 
-<!-- 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Fraud Detection Dashboard</title>
-</head>
-<body>
-</html> -->
+

@@ -18,6 +18,7 @@ def single_page():
 @app.route('/predict', methods=['POST'])
 def prediction():
     data = request.json#get input passed by json file
+    print(data)
     url_input = data.get('single_id')
 #     highest_exp = data.get('highest_exp')
     feature_path = 'features/Boston-Massachusetts-US/Boston_all.pickle'
@@ -25,12 +26,16 @@ def prediction():
         print('get an url:{}'.format(url_input))
 #         result_apt,result_img = web_query(url_input, feature_path)
         result = web_query(url_input, feature_path)
+
+    return render_template('blueTableRows.html',data=result)
+    
+    
 #     elif highest_exp:
 #         result = web_query(None, highest_exp)
 #     else:
 #         result = web_query()# if no query coming in ,then return hottest apartment
-
-    return jsonify({'inputs': result})#save to jsonify and go back to the webpage
+#     print(result)
+#     return jsonify({'inputs': result})#save to jsonify and go back to the webpage
 #     return jsonify({'apt_id':result_apt,'img_path':result_img})
 
 

@@ -1,0 +1,23 @@
+<tr>
+    <th>Apartment Name</th>
+    <th>Apartment URL</th>
+    <th>Host About</th>
+    <th>Image</th>
+    <th>Room Capacity</th>
+    <th>Overall rating</th>
+    <th>Highlights</th>
+</tr>
+
+{% for row in data %}
+<tr>
+    <td>{{ row['apt_name'] }}</td>
+    <td>{{ row['canonical_url'] }}</td>
+    <td>{{ row['host_about'] }}</td>
+    <td>{{ row['which_one'] }}</td>
+    <td>{{ row['room_capacity'] }}</td>
+    <td>{{ row['overall_rating'] }}</td>
+    <td>{{ row['room_type'] }}</td>
+</tr>
+{% endfor %}
+
+
