@@ -5,7 +5,7 @@ from flask import (Flask,
                    jsonify,
                    render_template,
                    request)
-from ec2.prophet_db import web_query
+from eyebnb_ec2.web_query import *
 
 app = Flask(__name__)
 
