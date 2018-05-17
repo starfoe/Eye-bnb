@@ -1,11 +1,11 @@
-navbar_font{
+/* navbar_font{
   position: relative;
   min-height: 300px;
   margin-bottom: 100px;
-  background-color:#FFFFFF;  //此处是我修改的地方
+  background-color:#FFFFFF;  
   background-image: url("../App_Themes/header.jpg");
   border: 20px solid transparent;  
-}
+} */
 
 table.blueTable {
   border: 1px solid #1C6EA4;
@@ -26,9 +26,9 @@ table.blueTable tr:nth-child(even) {
 }
 table.blueTable thead {
   background: #1C6EA4;
-  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -moz-linear-gradient(top, #5592bb 100%, #327cad 66%, #1C6EA4 0%);
+  background: -webkit-linear-gradient(top, #5592bb 100%, #327cad 66%, #1C6EA4 0%);
+  background: linear-gradient(to bottom, #5592bb 100%, #327cad 66%, #1C6EA4 0%);
   border-bottom: 2px solid #444444;
 }
 table.blueTable thead th {
