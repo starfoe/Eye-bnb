@@ -6,6 +6,7 @@ import requests as req
 import pandas as pd
 import numpy as np
 import gist
+import boto3
 
 from PIL import Image
 from io import BytesIO
@@ -64,8 +65,6 @@ def find_closest_img(featureX,features_matrix,mask = {}, n_selected = 20):
         
     return current_selected_index,mask 
 
-
-
 def web_query(url_input,return_top = 20,feature_path):
     feature_matrix,img_file_path,apt_name = load_features(feature_path)
     try:
@@ -78,6 +77,15 @@ def web_query(url_input,return_top = 20,feature_path):
     selected_index =  find_closest_img(feature_input,feature_matrix,return_top)[0]
     selected_apt_id = apt_id[selected_index]
     selected_image_path = filepath[selected_index]
+    ######Temporary searching from Json File#######
+    bucket_name = "chen-gal-test"
+    s3 = boto3.client("s3")
+    database_json_short = 'AirbnbData/Boston-Massachusetts-US/ws_data/webscrapted.json'
+    response = s3.get_object(Bucket=bucket_name,
+                             Key=database_json_short)
+    fake_database= json.loads(response['Body'].read())
+    #####Extract data from the fake database#######
+    
     ######
     #if there are duplicated aparts in the recommending results, then keep only one of them    
     ######
