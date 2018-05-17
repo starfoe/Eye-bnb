@@ -85,7 +85,19 @@ def web_query(url_input,return_top = 20,feature_path):
                              Key=database_json_short)
     fake_database= json.loads(response['Body'].read())
     #####Extract data from the fake database#######
-    
+    fake_result = {}
+    for i in selected_apt:
+        tmp = {}
+        x = fake_database[str(i)]
+        tmp['apt_name'] = x['apt_name']
+        tmp['canonical_url'] = x['info']['canonical_url']
+        tmp['room_type'] = x['info']['room_type']
+        tmp['room_compacity'] = x['info']['room_capacity']
+        tmp['host_about'] = x['info']['host_about']
+        tmp['overall_rating']=x['info']['overall_rating']
+        tmp['review_highlight'] = x['info']['review_highlight']
+        fake_result[str(i)]=tmp
+
     ######
     #if there are duplicated aparts in the recommending results, then keep only one of them    
     ######
