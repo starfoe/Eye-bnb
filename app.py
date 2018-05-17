@@ -20,8 +20,9 @@ def prediction():
     data = request.json#get input passed by json file
     url_input = data.get('single_id')
 #     highest_exp = data.get('highest_exp')
-    feature_path = 'features\Boston-Massachusetts-US\Boston_all.pickle'
+    feature_path = 'features/Boston-Massachusetts-US/Boston_all.pickle'
     if url_input:
+        print('get an url:{}'.format(url_input))
 #         result_apt,result_img = web_query(url_input, feature_path)
         result = web_query(url_input, feature_path)
 #     elif highest_exp:

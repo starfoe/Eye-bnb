@@ -130,14 +130,14 @@
         var inputs = JSON.parse(results.inputs);
         for (var i = 0; i < inputs.length; i++) {
           tr = $('<tr/>');
-          tr.append("<td>" + inputs[i].case_id + "</td>");
-          tr.append("<td>" + inputs[i].sequence_number + "</td>");
-          tr.append("<td>" + inputs[i].event_name + "</td>");
-          tr.append("<td>" + "<a href={{link}} " + "id=html" + i + ">HTML</a>" + "</td>");
-          tr.append("<td>" + inputs[i].ticket_quantity + "</td>");
-          tr.append("<td>" + inputs[i].ticket_value + "</td>");
-          tr.append("<td>" + inputs[i].fraud_probability + "</td>");
-          tr.append("<td>" + inputs[i].fraud_exposure + "</td>");
+          tr.append("<td>" + inputs[i].apt_name + "</td>");
+          tr.append("<td>" + inputs[i].canonical_url + "</td>");
+          tr.append("<td>" + inputs[i].host_about + "</td>");
+          tr.append("<td>" + "<a href={{link}} " + "id=html" + inputs[i].which_one + ">HTML</a>" + "</td>");
+          tr.append("<td>" + inputs[i].room_compacity + "</td>");
+          tr.append("<td>" + inputs[i].host_about + "</td>");
+          tr.append("<td>" + inputs[i].overall_rating + "</td>");
+          tr.append("<td>" + inputs[i].review_highlight + "</td>");
           $("table.blueTable").append(tr);
         };
     };
