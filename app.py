@@ -28,15 +28,7 @@ def prediction():
         result = web_query(url_input, feature_path)
 
     return render_template('blueTableRows.html',data=result)
-    
-    
-#     elif highest_exp:
-#         result = web_query(None, highest_exp)
-#     else:
-#         result = web_query()# if no query coming in ,then return hottest apartment
-#     print(result)
-#     return jsonify({'inputs': result})#save to jsonify and go back to the webpage
-#     return jsonify({'apt_id':result_apt,'img_path':result_img})
+
 
 
 def main():
