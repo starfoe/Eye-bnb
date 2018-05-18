@@ -9,6 +9,7 @@ import numpy as np
 import requests as req
 from io import BytesIO
 import gist
+import cv2
 
 
 
@@ -195,15 +196,17 @@ def feature_df_assembly(X,imgNameList,write_to_file = False, **kwargs):
     if len(X) != len(imgNameList):
         raise Exception('imgNameList should have the same length as features')
     
-    dict_tmp = {'features':X.tolist(),'img_names':imgNameList}
-    df_return = pd.DataFrame(dict_tmp)
-    
+    columns1 = list(range(X.shape[1]))
+    df_return = pd.DataFrame(X,columns = columns1)
+    df_return['img_names'] = imgNameList
+
     if 'labels' in kwargs:
         labels = kwargs['labels']
         df_return['class_label'] = labels
     
     if write_to_file:
         df_return.to_csv(write_to_file)
+        
     return df_return
 
 def HSV_hist_extraction(imgFolder,nums = 9,startImg = 0,local = False, **kwargs):
@@ -215,12 +218,13 @@ def HSV_hist_extraction(imgFolder,nums = 9,startImg = 0,local = False, **kwargs)
             startImg: <int> the index of the first picture
             local:<bool> whether images are online or saved locally
             imageList:<list> a specific list of images
+            logfile:<string> logfile name
         Output: 
             featureX: <matrix> a matrix of size (nums,960) where each row represents an image feature
             nameList:<list> a list of image name in accordance to the feature matrix
     '''
     nameList = []
-    featureX = np.zeros((1,960))
+    featureX = np.zeros((1,270))
     
     if 'imageList' in kwargs:
         image_list = kwargs['imageList']    
@@ -236,27 +240,37 @@ def HSV_hist_extraction(imgFolder,nums = 9,startImg = 0,local = False, **kwargs)
             print("image {} is in processing".format(i))
             image_name = imgFolder+ image_list[i]
             im = np.array(Image.open(image_name))
-            feature_for_i = gist.extract(im)
+            feature_for_i = hsv_hist_extract(im)
             featureX = np.concatenate((featureX,feature_for_i.reshape(1,-1)),axis = 0)
             nameList.append(image_name)
     else:
         for i in range(startImg,startImg+nums):
-            print("image {} is in processing".format(i))
-            image_name = imgFolder + image_list[i]
-            print(image_name)
+            if i % 50 == 0:
+                print("image {} is in processing".format(i))
+            image_name = imgFolder + image_list[i]            
             try:
                 response = req.get(image_name)
                 im = np.array(Image.open(BytesIO(response.content)))
-                feature_for_i = gist.extract(im)
-                featureX = np.concatenate((featureX,feature_for_i.reshape(1,-1)),axis = 0)
+                feature_for_i = hsv_hist_extract(im,i)
+                
+                
+                featureX = np.concatenate((featureX,feature_for_i.reshape(1,-1)),axis = 0)                
                 nameList.append(image_name)
+                if 'logfile' in kwargs:
+                    logfile_name = kwargs['logfile'] 
+                    with open(logfile_name,'a') as f:
+                        f.write(f'---------------------\n successfully extracted the feature of image {image_name}' )
             except:
                 print('{} is error'.format(image_name))
+                if 'logfile' in kwargs:
+                    logfile_name = kwargs['logfile'] 
+                    with open(logfile_name,'a') as f:
+                        f.write(f'---------------------\n error image {image_name}' )                                
                 continue
     
     return featureX[1:,:], nameList       
 
-def hsv_hist_extract(img,bins=[90,90,90]):
+def hsv_hist_extract(img,number,bins=[90,90,90]):
     '''
     Function: extract HSV histogram feature from *img* with specified number of bins
     Input: 
@@ -264,11 +278,16 @@ def hsv_hist_extract(img,bins=[90,90,90]):
         bins: number of bins for each channel
         output: <np.array> size of bins[0]+bins[1]+bins[2]
     '''
-    hsv_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
-    hist_1 = cv2.calcHist([hsv_image[:,:,0]],[0],None,[bins[0]],[0,181])
-    hist_2 = cv2.calcHist([hsv_image[:,:,1]],[0],None,[bins[1]],[0,256])
-    hist_3 = cv2.calcHist([hsv_image[:,:,2]],[0],None,[bins[2]],[0,256])
-    hist_tmp = cv2.normalize(hist_1,hist_1,cv2.NORM_MINMAX,-1)
-    hist_tmp = cv2.normalize(hist_2,hist_2,cv2.NORM_MINMAX,-1)
-    hist_tmp = cv2.normalize(hist_3,hist_3,cv2.NORM_MINMAX,-1)
-    return np.concatenate((hist_1,hist_2,hist_3),axis = 0)
+    try:
+        hsv_image = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+        hist_1 = cv2.calcHist([hsv_image[:,:,0]],[0],None,[bins[0]],[0,181])
+        hist_2 = cv2.calcHist([hsv_image[:,:,1]],[0],None,[bins[1]],[0,256])
+        hist_3 = cv2.calcHist([hsv_image[:,:,2]],[0],None,[bins[2]],[0,256])
+        hist_tmp = cv2.normalize(hist_1,hist_1,cv2.NORM_MINMAX,-1)
+        hist_tmp = cv2.normalize(hist_2,hist_2,cv2.NORM_MINMAX,-1)
+        hist_tmp = cv2.normalize(hist_3,hist_3,cv2.NORM_MINMAX,-1)
+        return np.concatenate((hist_1,hist_2,hist_3),axis = 0)
+    except:
+        raise IOError(f'faile to convert {number} image')
+        
+    
