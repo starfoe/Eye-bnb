@@ -39,12 +39,15 @@
         });
     };
     let display_results = function(results) {
-        $('table#blueTable tbody').html(results)
+        $('div#results').html(results)
         };
     
     $(document).ready(function(){
         $("button#retrieve_id").click(function(){
             let inputs = get_single_inputs();
+            url = inputs.single_id
+            user_img_tag = '<img src="'+url+'"/>' 
+            $("div#userImg").html(user_img_tag)
             send_inputs_json(inputs);
         })
         $("button#retrieve_highest").click(function(){
@@ -58,56 +61,37 @@
  
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-danger fixed-top">
+
+      <a class="navbar-brand font-weight-bold text-white" href="index.html">Eye bnb</a>
     
-    
-      <a class="navbar-brand" href="index.html">Eye bnb</a>
-        
 </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-          <h3>Discover Airbnb lodges and apartments for your fabulous journey!</h3>
-       
-            <h4>Have seen one somewhere online?</h4>
-            <p>Please paste your image url here!</p>          
-            <input id="single_event" />
-            <button type="button" id="retrieve_id">Go!</button>
-            <p><span id="single_result"></span></p>
-        
-        
+          <div class="row">
+              <div class="col-md-9">
+                    <h3>Discover Airbnb lodges and apartments for your fabulous journey!</h3>
+                    <h4 class="text-secondary">Have seen one somewhere online?</h4>
+                    <p>Please paste your image url here!</p>          
+                    <input id="single_event" />
+                    <button type="button" class= "btn btn-danger" id="retrieve_id">Go!</button>
+                    <p><span id="single_result"></span></p>
+              </div>
+              <div class="col-md-3">
+                  <div class="img-thumbnail" id="userImg"></div>
+              </div>
+          </div>
       </div>
     </div>
 
 
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class ="row mt-5"></div>
-      
-        <div class="col-md-10">
-          <h3>Your picture</h3>
-          <p>Is this the one your are looking for?</p>          
-<!--           <input id="highest_exposure" /> -->
-            <p>Fake fake fake image</p>
-            <imagebody>
-            </imagebody>
-<!--           <button type="button" id="retrieve_highest">Go!</button> -->
-          <p><span id="many_results"></span></p>
-        </div>
-      </div>
-   </div>
     
       <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <table class="blueTable" id="blueTable">
-              <tbody>                
-              </tbody>
-            </table>
-            <div class="col-md-8 text-center"><p><span id="results"></span></p></div>
-            <div class="col-md-2"></div>
+        <div class="row" id="results">
+
         </div>
       </div>
 

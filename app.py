@@ -27,7 +27,7 @@ def prediction():
 #         result_apt,result_img = web_query(url_input, feature_path)
         result = web_query(url_input, feature_path)
         print(result)
-    return render_template('blueTableRows.html',data=result)
+    return render_template('pictureGrids.html',data=result)
 
 
 

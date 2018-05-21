@@ -1,0 +1,13 @@
+
+{% for row in data %}
+<div class="col-md-4">
+    <div class="img-thumbnail" style="margin:1em">
+        <a href="{{ row['canonical_url'] }}"> 
+            <img style="width:100%" src="{{ row['which_one'] }}" class="rounded float-left" />                   
+        </a>
+        <div class="caption">Name:{{ row['apt_name'] }}</div>
+        <div class="caption">Room type:{{ row['room_type'] }}|Capacity:{{ row['room_capacity'] }}</div>
+        <div class="caption">Overal rating: {{ row['overall_rating'] }}</div>
+    </div>
+</div>
+{% endfor %}
