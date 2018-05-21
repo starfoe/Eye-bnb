@@ -11,13 +11,13 @@
 {% for row in data %}
 <tr>
     <td>{{ row['apt_name'] }}</td>
-    <td>{{ row['canonical_url'] }}</td>
+    <td><a href="url">{{ row['canonical_url'] }}</a> </td>
     <td>{{ row['host_about'] }}</td>
-    <td>{{ row['which_one'] }}</td>
+<!--     <td>{{ row['which_one'] }}</td> -->
+    <td> <img src={{ row['which_one'] }} />
     <td>{{ row['room_capacity'] }}</td>
     <td>{{ row['overall_rating'] }}</td>
     <td>{{ row['room_type'] }}</td>
 </tr>
 {% endfor %}
-
 

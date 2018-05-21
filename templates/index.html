@@ -10,7 +10,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="/static/css/table.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/all.css">
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -58,19 +58,25 @@
  
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     
     
-      <navbar_1>Eye bnb</navbar_1>
+      <a class="navbar-brand" href="index.html">Eye bnb</a>
         
 </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h4>Discover Airbnb lodges and apartments for your dreaming journey</h4>
+          <h3>Discover Airbnb lodges and apartments for your fabulous journey!</h3>
+       
+            <h4>Have seen one somewhere online?</h4>
+            <p>Please paste your image url here!</p>          
+            <input id="single_event" />
+            <button type="button" id="retrieve_id">Go!</button>
+            <p><span id="single_result"></span></p>
         
-        <p>Need to add more something here </p>
+        
       </div>
     </div>
 
@@ -79,21 +85,14 @@
     <div class="container">
       <!-- Example row of columns -->
       <div class ="row mt-5"></div>
-      <div class="row">
-        <div class="col-md-4">
-            <h4>Have seen one somewhere online?</h4>
-            <p>Please paste your image url here!</p>          
-            <input id="single_event" />
-            <button type="button" id="retrieve_id">Go!</button>
-            <p><span id="single_result"></span></p>
-        </div>
-       
-        <div class="col-md-4">
+      
+        <div class="col-md-10">
           <h3>Your picture</h3>
           <p>Is this the one your are looking for?</p>          
 <!--           <input id="highest_exposure" /> -->
             <p>Fake fake fake image</p>
-            <img src="https://s3-us-west-2.amazonaws.com/chen-gal-test/CVPR_indoor_imageset/images/florist/anaisflor480.jpg">
+            <imagebody>
+            </imagebody>
 <!--           <button type="button" id="retrieve_highest">Go!</button> -->
           <p><span id="many_results"></span></p>
         </div>
