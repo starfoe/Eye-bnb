@@ -270,7 +270,7 @@ def HSV_hist_extraction(imgFolder,nums = 9,startImg = 0,local = False, **kwargs)
     
     return featureX[1:,:], nameList       
 
-def hsv_hist_extract(img,number,bins=[90,90,90]):
+def hsv_hist_extract(img,bins=[90,90,90]):
     '''
     Function: extract HSV histogram feature from *img* with specified number of bins
     Input: 
@@ -289,5 +289,5 @@ def hsv_hist_extract(img,number,bins=[90,90,90]):
         return np.concatenate((hist_1,hist_2,hist_3),axis = 0)
     except:
         raise IOError(f'faile to convert {number} image')
-        
+
     
