@@ -15,28 +15,37 @@ from eyebnb_ec2.image_web_tools import *
 
 def load_features(path):
     df_file = pd.read_pickle(path)
-    apt_name = df_file['apt_id_1']
-    img_file_path = df_file['full_file_name']
+    apt_name = df_file['apt'].values
+    img_file_path = df_file['full_filename'].values
     feature_matrix = df_file[list(range(960))].values
+    return feature_matrix,img_file_path,apt_name
+
+def load_features_all(path):
+    df_file = pd.read_pickle(path)
+    apt_name = df_file['apt']
+    img_file_path = df_file['full_filename']
+    columns_gist = [str(x)+'_x' for x in range(960)]
+    columns_hsv = [str(y)+'_y' for y in range(270)]
+    columns_com = columns_gist+columns_hsv
+    feature_matrix = df_file[columns_com].values    
     return feature_matrix,img_file_path,apt_name
     
 def web_query(url_input,feature_path,return_top = 20):
-    feature_matrix,img_file_path,apt_id = load_features(feature_path)
-#     try:
+    feature_matrix,img_file_path,apt_id = load_features_all(feature_path)
+
     response = req.get(url_input)
-    #im = np.array(Image.open(BytesIO(response.content)))
+
     img_tmp = Image.open(BytesIO(response.content))
     im = np.asarray(img_tmp.resize((600,400)))
-#         print('image file is {}'.format(im))
+
     
-    feature_input = feature_extraction(im,feature_name = 'gist')
-    
-#     except:
-#         raise IOError('Cannot open the URL')
-        #raise error
+    feature_input = feature_extraction(im,feature_name = 'all')
+    print('feature_extracted successfully')
+
     selected_index =  find_closest_img(feature_input,feature_matrix,{},return_top)[0]
-    selected_apt_id = apt_id[selected_index]
-    selected_image_path = img_file_path[selected_index]
+    selected_apt_id = apt_id[selected_index].values
+    selected_image_path = img_file_path[selected_index].values
+    
     ######Temporary searching from Json File#######
     bucket_name = "chen-gal-test"
     s3 = boto3.client("s3")

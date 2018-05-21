@@ -21,12 +21,12 @@ def prediction():
     print(data)
     url_input = data.get('single_id')
 #     highest_exp = data.get('highest_exp')
-    feature_path = 'features/Boston-Massachusetts-US/Boston_all.pickle'
+    feature_path = 'features/Boston-Massachusetts-US/Boston_feature_new_all.pickle'
     if url_input:
         print('get an url:{}'.format(url_input))
 #         result_apt,result_img = web_query(url_input, feature_path)
         result = web_query(url_input, feature_path)
-
+        print(result)
     return render_template('blueTableRows.html',data=result)
 
 
