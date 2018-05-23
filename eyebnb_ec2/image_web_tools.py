@@ -46,6 +46,7 @@ def find_closest_img(featureX,features_matrix,mask = {}, n_selected = 20):
     
     distance_vector = cosine_similarity(featureX.reshape(1,-1),features_matrix)#can change to other similarity measurements
     percentile = [99,95,90,85,80,75,70,1]
+#     percentile = [30]
     for perc in percentile:
         threshold = np.percentile(distance_vector,perc)
         # times 10 to make sure that there would be enough candidate images
@@ -59,6 +60,7 @@ def find_closest_img(featureX,features_matrix,mask = {}, n_selected = 20):
     while(rounds > 0):
         candidate_small = distance_vector[index_filtered[:,0],index_filtered[:,1]]
         top_similar = np.argsort(candidate_small)[::-1][0:n_selected+len(mask)]
+#         top_similar = np.argsort(candidate_small)[0:n_selected+len(mask)]
         current_selected_index = [x for x in index_filtered[top_similar][:,1] \
                                   if x not in mask]
         assert(len(current_selected_index) == n_selected)

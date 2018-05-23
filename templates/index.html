@@ -46,7 +46,7 @@
         $("button#retrieve_id").click(function(){
             let inputs = get_single_inputs();
             url = inputs.single_id
-            user_img_tag = '<img src="'+url+'"/>' 
+            user_img_tag = '<img src="'+url+'" width="100%"/>' 
             $("div#userImg").html(user_img_tag)
             send_inputs_json(inputs);
         })
@@ -80,7 +80,7 @@
                     <p><span id="single_result"></span></p>
               </div>
               <div class="col-md-3">
-                  <div class="img-thumbnail" id="userImg"></div>
+                  <div class="img-thumbnail" id="userImg" width="20%"></div>
               </div>
           </div>
       </div>
