@@ -60,7 +60,7 @@ o	Images of each apartment were scraped from Airbnb and saved to MongoDB
 
 ## Evaluation - conceptually and quantitatively
 
-• *Model Validation*：Image features and similarity measurements was tested on a subset of Indoor Scene Recognition dataset publicated by MIT, for more details: http://web.mit.edu/torralba/www/indoor.html
+ • *Model Validation*：Image features and similarity measurements was tested on a subset of Indoor Scene Recognition dataset publicated by MIT, for more details: http://web.mit.edu/torralba/www/indoor.html
 
 Examples in the dataset:
 
@@ -90,7 +90,7 @@ Calinski_harabaz: <url> http://scikit-learn.org/stable/modules/generated/sklearn
 •	(To do) Step2: users can add some word descriptions to what they dream of going ( industrial style, splendid..) to make the searching more precise
 
 
-##Results:
+## Results:
 
 
 Given the image on the upper left corner, the following apartments are recommended:
