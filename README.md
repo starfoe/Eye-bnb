@@ -1,3 +1,4 @@
+As a travel enthusiast with passion in experiencing stylish airbnb apartments, finding my favorite apartment sometimes is not enjoyable. Being stucked by describing what I am looking for in words(not mention looking for apartments in non-english speaking places), I have this come out...
 
 
 # Eye BnB 
@@ -6,10 +7,11 @@
 
 •	This project will help users find their favorite lodging during their travel, based on images or some descriptions uploaded by the users
 
-•	It will provide value to:
+•	It would provide value to:
 
-  o	People who are looking for stylish, funky, fancy airbnb apartment for their travel
-  o	Apartment owners who want to know how many apartments in the same city looks like theirs so that they can make their apartments either discriminative or closer to the apartments which are already popular. 
+ o	People who are looking for stylish, funky, fancy airbnb apartment for their travel
+ 
+ o	Apartment owners who want to know how many apartments in the same city looks like theirs so that they can make their apartments either discriminative or closer to the apartments which are already popular. 
 
 ## Data sources
 
@@ -39,6 +41,7 @@ o	Images of each apartment were scraped from Airbnb and saved to MongoDB
 •	*Similarities calculation*
   
   o	Cosine Distance
+  
   o	Pearson correlation
   
   
@@ -47,7 +50,7 @@ o	Images of each apartment were scraped from Airbnb and saved to MongoDB
   o	HSV-Histgram
   
   o	GIST
-  
+
   o CNN
   
   o	others
@@ -82,6 +85,31 @@ Calinski_harabaz: <url> http://scikit-learn.org/stable/modules/generated/sklearn
 •	AWS EC2 and S3
 
 • (To do) Keras/TensorFlow 
+
+
+## References for the techniques involved in the project:
+
+### Gist feature: 
+
+  • MatthijsDouze,HervéJégou,SandhawaliaHarsimrat,LaurentAmsaleg,CordeliaSchmid. Evaluation of GIST descriptors for web-scale image search. CIVR 2009 - International Conference on Image and Video Retrieval, Jul 2009, Santorini, Greece. ACM, pp.19:1-8, 2009
+  
+  • Gist/Context of a Scene: <url> http://ilab.usc.edu/siagian/Research/Gist/Gist.html </url>
+
+  • A. Oliva and A. Torralba. Modeling the shape of the scene: a holistic representation of the spatial envelope. IJCV, 42(3):145–175, 2001.
+  
+### Similarity measurement:
+
+ • Similarity measurement between images: <url> https://ieeexplore.ieee.org/document/1508081/</url>
+ 
+### Clustering evaluation:
+
+ • <url> http://www.ims.uni-stuttgart.de/institut/mitarbeiter/schulte/theses/phd/algorithm.pdf </url>
+ 
+ • Calinski-Harabasz Index and Boostrap Evaluation with Clustering Methods: <url> http://ethen8181.github.io/machine-learning/clustering_old/clustering/clustering.html </url>
+
+### Packages/librarys:
+Pymongo, cv2, fftw3, urlib2, boto3,SciPy, Sklearn, PIL, flask
+ 
 
 
 
