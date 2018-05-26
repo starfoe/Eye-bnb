@@ -48,9 +48,9 @@ if __name__ == '__main__':
             dict_apt = {'apt_name':apt_name,'url' : url, 'info': scrape_info}
             apt_jses.update({str(apt_id):ori_json})
             apt_infos.update({str(apt_id):dict_apt})
-            # Save scraped data to files every 100 times
-            if i % 100 == 0 and i != 0:
-                filename = "DataSet/"+folder+"//ori_json_"+str(i)
+            # Save scraped data to files every 1000 times
+            if i % 1000 == 0 and i != 0:
+                filename = "DataSet/"+folder+"/ori_json_"+str(i)
                 with open(filename,"w") as f:
                     json.dump(apt_jses,f)
                 print("Wrote  down"+str(i)+"json file")

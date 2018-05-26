@@ -13,11 +13,12 @@ import requests as req
 import numpy as np
 import gist
 import cv2
-
+"""
+This script will load in images saved on S3 bucket with "prefix", extract gist feature from each of the images and save the feature file to *feature_folder* in pickle format. A log file will be generated to record the feature extraction process and saved to *logfile_name*
+"""
 if __name__ == '__main__':
     area = 'Boston-Massachusetts-US/'
     bucket_name = "chen-gal-test"
-    imagepath = "https://s3-us-west-2.amazonaws.com/chen-gal-test/AirbnbImages/"+area
     
     prefix = "AirbnbImages/"+area
     s3 = boto3.resource('s3')
@@ -43,17 +44,19 @@ if __name__ == '__main__':
     string = obj.key.split('/')  
     
     try:
+        #Change this part if you are using your own s3 bucket
         full_path_name = 'https://s3-us-west-2.amazonaws.com/'\
                                 +bucket_name+'/'+ str(obj.key)         
         response = req.get(full_path_name)
         img_temp = np.array(Image.open(BytesIO(response.content)))
-#         im = np.array(img_temp.resize((600,400)))
         feature_tmp = hsv_hist_extract(img_temp,count)
+        
     except:
         print('Error at img {}'.format(obj.key))
         with open(logfile_name,'a') as f:
             f.write('!!!!!!Failed at image {} ||{}\n'.format(counter,full_path_name) )       
         continue
+        
     else:
         counter += 1
         full_filenames.append(full_path_name)
@@ -72,10 +75,7 @@ if __name__ == '__main__':
         df_return['apt'] = apt_list
         df_return['full_filename'] = full_filenames
         df_return['filename'] = filenames
-        
-        ##
 
-        
         if not os.path.exists(feature_folder):
             os.makedirs(feature_folder)        
         filename = feature_folder + 'featureture_'+str(counter)+'.pickle'

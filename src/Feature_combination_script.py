@@ -1,8 +1,6 @@
-
 import json
 import os
 import pandas as pd
-
 import numpy as np
 
 
@@ -10,6 +8,7 @@ import numpy as np
 if __name__ == '__main__':
     """
     Load in two kind of features and combine together
+    Run Gist_feature_extraction_script.py and HSV_feature_extraction_script.py beforehand to get two set of features 
     """
     
     feature_folder = '../'+'features/'+ area 

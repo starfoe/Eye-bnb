@@ -14,11 +14,13 @@ import numpy as np
 import gist
 import cv2
 
-if __name__ == '__main__':
     
-    """
-    the script will extract features from images saved on s3 bucket for *area*. Feature files will be save to pickle files every 5000 images. A logfile is created at the same time to record the process of feature extraction     
-    """
+"""
+The script will extract features from images saved on s3 bucket in *area*. Feature files will be pickled to *feature_folder* every 5000 images. A logfile will be created at the same time to record the process of feature extraction and saved to *logfile_name*
+"""
+
+if __name__ == '__main__':
+
     area = 'Boston-Massachusetts-US/'
     bucket_name = "chen-gal-test"
     prefix = "AirbnbImages/"+area
