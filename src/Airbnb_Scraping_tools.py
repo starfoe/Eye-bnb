@@ -11,15 +11,17 @@ import pandas as pd
 import numpy as np
 import random
 
-def request_url( url, retries=3 ):
+def request_url( url, retries=5 ):
     """
     GET a page from url with a number of retries and exponential backoff.
     """
     print("request_url:{}".format(url))
+    user_agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'  
+    headers = {'User-Agent':user_agent}
     r = None
     wait = 2
     for i in range( retries ):
-        r = requests.get( url )
+        r = requests.get( url,headers = headers)
         if r.status_code >= 400:
             print( "HTTP error: %d %s" % (r.status_code, r.reason) )
             print( r.text )            
@@ -27,6 +29,8 @@ def request_url( url, retries=3 ):
             time.sleep( wait )
             wait *= 2
         else:
+            if i >= 1:
+                print('retried successfully with {}th time'.format(i)')
             break
     if r == None:
         raise CannotOpenUrl
@@ -67,7 +71,9 @@ def parse_each_webpage(page_url):
     Extract bootstrap JSON data from a page body and parse it. Get desired information and return them in a dictionary
     """
     try:
+        
         r = request_url(page_url)
+        
     except CannotOpenUrl:
         raise CannotOpenUrl
     else:
@@ -146,6 +152,5 @@ def parse_each_webpage(page_url):
     return info_collected, page_data
 
 
-    
     
     
