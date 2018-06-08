@@ -86,7 +86,6 @@ def web_query(url_input,feature_path,return_top = 20):
 
     img_tmp = Image.open(BytesIO(response.content))
     im = np.asarray(img_tmp.resize((600,400)))
-
     
     feature_input = feature_extraction(im,feature_name = 'all')
     print('feature_extracted successfully')
