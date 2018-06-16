@@ -157,7 +157,7 @@ With the same picture, the following apartments are regarded as dissimilar:
  • Calinski-Harabasz Index and Boostrap Evaluation with Clustering Methods: <url> http://ethen8181.github.io/machine-learning/clustering_old/clustering/clustering.html </url>
 
 ### Packages/librarys:
-Pymongo, cv2, fftw3, urlib2, boto3,SciPy, Sklearn, PIL, flask
+Pymongo, cv2, fftw3, urlib2, boto3,SciPy, Sklearn, PIL, flask 
  
 
 
