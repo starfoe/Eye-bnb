@@ -5,15 +5,15 @@
 
 •	This project helps users find their favorite lodging during travel, based on image similarity
 
-•	It would provide value to:
+•	It provides value to:
 
  o	People who are looking for stylish, funky, fancy airbnb apartment(s) for their travel
  
- o	Apartment owners who want to know how many apartments in the same city looks like theirs so that they can make their apartments either look unique or close to the apartments already popular. 
+ o	Apartment owners who want to know how many apartments in the same city look like theirs so that they can make their apartments either look unique or close to the apartments already popular. 
 
 ## Data sources
 
-•	InsideAirbnb, a dataset published by Airbnb which includes info of all apartments in the U.S. (http://insideairbnb.com/get-the-data.html)
+•	InsideAirbnb, a dataset published by Airbnb which contains a full list of all apartments in the U.S. (http://insideairbnb.com/get-the-data.html)
 
 •	Images and info of Airbnb apartments in Boston were scraped by urllib2
 
@@ -57,27 +57,38 @@ Merge the above two features into one single feature, save to a picke file local
   
 ## Modeling
 
-•	*Similarities calculation*
   
-  o	Cosine Distance
-  
-  o	Pearson correlation
-
-
-  
-•	*Image feature extraction*
+### Image feature extraction (see the referrence at the bottom for details)
   
   o	HSV-Histgram
+    
+   For each image, an HSV-Histgram feature was extracted by firstly decomposing the image to H/S/V channels, generating histogram for each channel and concating the three histograms. (90 buckets for each channel, producing a single feature vector of 270 long)
+   HSV is said to be able to reflect how people truly perceive color info. HSV-Histgram maily captures color info of an image. 
   
   o	GIST
+    
+   First of all, a set of filters were employed to convolve over the entire image, producing a bunch of convolved images. And then each convolved image was divided into 4 * 4 subimages over which mean value was calculated. Finally all the mean values were put together, producing a single vector called GIST feature.
+   GIST mainly capture the high level characteristics for each image, such as structural information, plain or texture, providing a holistic view for each image.
 
   o CNN(to do)
+    
+   Transfer learning methodology will be a way of feature extractor. Specifically,the output of the layer before softmax of a well-trained Inception-v3 model(on ImageNet) may be a feasible image feature.
   
   o	others(to do)
+  
+  
+### Similarities calculation
+  
+  o	Cosine Distance
+   
+   Cosine Distance was used because it is immune to the difference of feature magnitudes 
 
 ## Evaluation - conceptually and quantitatively
 
- • *Model Validation*：Image features and similarity measurements were tested on a subset of Indoor Scene Recognition dataset from MIT. For more details: http://web.mit.edu/torralba/www/indoor.html
+#### Challenge: how can we know if a feature works for measuring image similarity, considering that it's a unsupervised task and we don't have true labels for images we scraped from Airbnb
+#### Solution: test it on another labeled dataset which is similar to Airbnb's scenarios
+ 
+ • *Dataset*：Image features and similarity measurements were tested on a subset of Indoor Scene Recognition dataset from MIT. For more details: http://web.mit.edu/torralba/www/indoor.html
 
 Examples in the dataset:
 
@@ -89,20 +100,17 @@ Dining room：
 •  *Assumption*: features of images in the same category(bedroom/bookstore/florist/dining room..) should be closer to each other than that from different categories. Quantitatively speaking, the higher the ratio of dis(within clusters)/dis(between clusters) , the better the feature is.
   `Calinski_harabaz` was used to quantitatively validate the features. For comparation, a baseline case was fabricated by shuffling the image labels to make them random. The performance was as follows:
 
-
-
   Calinski_harabaz for the real case is 22.816
   Calinski_harabaz for the random case is 0.986
   
-  It's clear that Calinski_harabaz for the real case is quite higher than that of the baseline case, indicating that the feature works for representing images
+  It's clear that Calinski_harabaz for the real case is quite higher than that of the baseline case, indicating that the feature works for representing images and it's feasible to use it to measuring image similarity
   
 Calinski_harabaz: <url> http://scikit-learn.org/stable/modules/generated/sklearn.metrics.calinski_harabaz_score.html</url>
 
-•	*Visualization*: look at returned results and conceptually feel if they make sense
 
 ## Deployment
 
-•	Step1: given a picture, the system can return places look similar to it (of the same style)
+•	Step1: given a picture, the system returns places look similar to it (in the same style)
 
 •	(backlog) Step2: users can add some word descriptions to specify where they dream of going ( industrial style, splendid..) to refine the result
 
@@ -138,6 +146,10 @@ With the same picture, the following apartments are regarded as dissimilar:
   • Gist/Context of a Scene: <url> http://ilab.usc.edu/siagian/Research/Gist/Gist.html </url>
 
   • A. Oliva and A. Torralba. Modeling the shape of the scene: a holistic representation of the spatial envelope. IJCV, 42(3):145–175, 2001.
+  
+### Transfer learning: 
+  
+  <url>https://arxiv.org/pdf/1310.1531v1.pdf</url>
   
 ### Similarity measurement:
 
