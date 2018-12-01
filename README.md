@@ -85,7 +85,7 @@ Merge the above two features into one single feature, save to a picke file local
 
 ## Evaluation - conceptually and quantitatively
 
-#### Challenge: how can we know if a feature works for measuring image similarity, considering that it's a unsupervised task and we don't have true labels for images we scraped from Airbnb
+#### Challenge: how can we know if the feature works for measuring image similarity, considering that it's an unsupervised task and we don't have true labels for images we scraped from Airbnb
 #### Solution: test it on another labeled dataset which is similar to Airbnb's scenarios
  
  • *Dataset*：Image features and similarity measurements were tested on a subset of Indoor Scene Recognition dataset from MIT. For more details: http://web.mit.edu/torralba/www/indoor.html
@@ -98,9 +98,11 @@ Dining room：
 <img src="https://github.com/starfoe/Eye-bnb/blob/master/iconImage/Picture3.png"> </img>
 
 •  *Assumption*: features of images in the same category(bedroom/bookstore/florist/dining room..) should be closer to each other than that from different categories. Quantitatively speaking, the higher the ratio of dis(within clusters)/dis(between clusters) , the better the feature is.
+  
   `Calinski_harabaz` was used to quantitatively validate the features. For comparation, a baseline case was fabricated by shuffling the image labels to make them random. The performance was as follows:
 
   Calinski_harabaz for the real case is 22.816
+  
   Calinski_harabaz for the random case is 0.986
   
   It's clear that Calinski_harabaz for the real case is quite higher than that of the baseline case, indicating that the feature works for representing images and it's feasible to use it to measuring image similarity
